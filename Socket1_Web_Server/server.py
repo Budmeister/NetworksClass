@@ -24,6 +24,13 @@ while True:
             connectionSocket.close()
             continue
         filename = message[1]
+        if filename == "/exit":
+            print("Exit command received. Exiting...")
+        
+            connectionSocket.send("HTTP/1.1 200 OK\r\n".encode())
+            connectionSocket.send("\r\n".encode())
+            connectionSocket.close()
+            break
         with open(filename[1:]) as f:
             outputdata = f.readlines()
         # Send one HTTP header line into socket
