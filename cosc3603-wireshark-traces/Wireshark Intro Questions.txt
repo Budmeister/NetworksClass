@@ -1,0 +1,5 @@
+1. TCP, TLSv1.3, DNS
+2. 0.060093 seconds
+3. IP of gaia.cs.umass.edu: 128.119.245.12
+   IP of my computer: 192.168.20.103
+4. See attached files
