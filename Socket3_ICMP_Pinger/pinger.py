@@ -153,12 +153,12 @@ def format_delay(delay):
 
 def main():
     hosts = [
-        ("localhost", "localhost"),
+        # ("localhost", "localhost"),
         ("google.com", "google.com"),
-        ("letu.edu", "letu.edu"),
-        ("fr.hma.rocks", "fr.hma.rocks (France)"),
-        ("np.hma.rocks", "np.hma.rocks (Nepal)"),
-        ("na.hma.rocks", "na.hma.rocks (Namibia)")
+        # ("letu.edu", "letu.edu"),
+        # ("fr.hma.rocks", "fr.hma.rocks (France)"),
+        # ("np.hma.rocks", "np.hma.rocks (Nepal)"),
+        # ("na.hma.rocks", "na.hma.rocks (Namibia)")
     ]
 
     print("Starting ping for hosts: ")
