@@ -9,7 +9,7 @@ import binascii
 RESET = "\x1b[0m"
 RED = "\x1b[31m"
 GREEN = "\x1b[32m"
-YELLOW = "\x21[33m"
+YELLOW = "\x1b[33m"
 
 def redify(msg):
     return f"{RED}{msg}{RESET}"
@@ -95,7 +95,7 @@ def build_packet():
 
 def get_route(hostname):
     time_left = TIMEOUT
-    for ttl in range(1, MAX_HOPS):
+    for ttl in range(MAX_HOPS, 0, -1):
         for tries in range(TRIES):
             dest_addr = gethostbyname(hostname)
             print(f"dest_addr: {dest_addr}")
@@ -107,6 +107,7 @@ def get_route(hostname):
 
             my_socket = socket(AF_INET, SOCK_RAW, icmp)
             # Fill in end
+            yellow(f"Setting ttl to {ttl}")
             my_socket.setsockopt(IPPROTO_IP, IP_TTL, ttl)
             my_socket.settimeout(TIMEOUT)
             try:
