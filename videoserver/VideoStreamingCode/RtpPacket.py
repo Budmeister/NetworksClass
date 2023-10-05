@@ -1,5 +1,6 @@
 import sys
 from time import time
+import struct
 HEADER_SIZE = 12
 
 class RtpPacket:	
@@ -12,16 +13,23 @@ class RtpPacket:
 		"""Encode the RTP packet with header fields and payload."""
 		timestamp = int(time())
 		header = bytearray(HEADER_SIZE)
-		#--------------
-		# TO COMPLETE
-		#--------------
-		# Fill the header bytearray with RTP header fields
 		
-		# header[0] = ...
-		# ...
+		header[0] = \
+			(version << 6) & 0b11000000 | \
+			(padding << 5) & 0b00100000 | \
+			(extension << 4) & 0b00010000 | \
+			(cc) & 0b00001111
+		header[1] = \
+			(marker << 7) & 0b10000000 | \
+			(pt) & 0b01111111
+		header[2:4] = struct.pack("H", seqnum)
+		header[4:8] = struct.pack("I", timestamp)
+		header[8:12] = struct.pack("I", ssrc)
+
+		self.header = header
 		
 		# Get the payload from the argument
-		# self.payload = ...
+		self.payload = payload
 		
 	def decode(self, byteStream):
 		"""Decode the RTP packet."""
