@@ -48,7 +48,7 @@ def checksum(string):
         count = count + 2
     
     if count_to < len(string):
-        csum = csum + ord(string[len(string) - 1])
+        csum = csum + string[-1]
         csum = csum & 0xffffffff
     
     csum = (csum >> 16) + (csum & 0xffff)
@@ -88,8 +88,8 @@ def build_packet():
 
     header = struct.pack("bbHHh", ICMP_ECHO_REQUEST, 0, my_checksum, id, 1)
 
-    print(f"header: {header}")
-    print(f"data: {data}")
+    # print(f"header: {header}")
+    # print(f"data: {data}")
     packet = header + data
     return packet
 
@@ -120,7 +120,7 @@ def get_route(hostname):
                 if what_ready[0] == []: # Timeout
                     red("  *           *           *           Request timed out")
                 recv_packet, addr = my_socket.recvfrom(1024)
-                print(f"Received packet ({len(recv_packet)}): {recv_packet}")
+                # print(f"Received packet ({len(recv_packet)}): {recv_packet}")
                 time_received = time.time()
                 time_left = time_left - how_long_in_select
                 if time_left <= 0:
@@ -161,20 +161,22 @@ def get_route(hostname):
 
 def main():
     hosts = [
-        # ("localhost", "localhost"),
+        ("localhost", "localhost"),
         ("google.com", "google.com"),
-        # ("letu.edu", "letu.edu"),
-        # ("fr.hma.rocks", "fr.hma.rocks (France)"),
-        # ("np.hma.rocks", "np.hma.rocks (Nepal)"),
+        ("letu.edu", "letu.edu"),
+        ("fr.hma.rocks", "fr.hma.rocks (France)"),
+        ("np.hma.rocks", "np.hma.rocks (Nepal)"),
         # ("na.hma.rocks", "na.hma.rocks (Namibia)")
     ]
 
     print("Starting ping for hosts: ")
     for _, display_name in hosts:
         print(f"\t{display_name}")
-    print()
 
-    for host, _ in hosts:
+    for host, display_name in hosts:
+        print()
+        yellow(f"\tFor host: {display_name}")
+        print()
         get_route(host)
 
 if __name__ == "__main__":
